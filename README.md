@@ -38,29 +38,31 @@ A Flutter coding project that demonstrates how to build an infinite scrolling li
 
 ```
 lib/
-├── core/                     # Các thành phần cốt lõi, dùng chung
-│   ├── configs/              # Cấu hình ứng dụng
-│   ├── constants/            # Các hằng số (ví dụ: API URL, Key...)
-│   ├── di/                   # Dependency Injection (get_it)
-│   ├── extensions/           # Các extension giúp mở rộng tính năng
-│   ├── localization/         # Đa ngôn ngữ
-│   ├── services/             # Các dịch vụ hỗ trợ (API, Storage, v.v.)
-│   ├── themes/               # Quản lý giao diện (Theme, Color Scheme...)
-│   ├── utils/                # Các tiện ích (Helpers, Formatters, Validators...)
-│   └── widgets/              # Các widget tái sử dụng (Button, Card, Modal...)
-├── features/                 # Các tính năng chính
-│   ├── name_feature/         # Tính năng "name_feature"
-│   │   ├── domain/           # Lớp domain
-│   │   │   ├── models/       # Các lớp mô hình
-│   │   │   └── repositories/ # Các lớp Repository
-│   │   └── presentation/     # Lớp hiển thị (UI, Bloc, Widget...)
-│   │       ├── bloc/         # Quản lý trạng thái (State Management)
-│   │       ├── page/         # Các màn hình hiển thị chính
-│   │       └── widget/       # Widget dùng riêng cho feature
-│   └── splash/               # Tính năng màn hình chờ (Splash Screen)
-└── app.dart                  # Entry point của ứng dụng (MaterialApp)
-└── main.dart                 # Initital ứng dụng
-└── simple_bloc_observer.dart # Theo dõi và ghi lại các thay đổi trong trạng thái (state)
+├── core/                     # Core components, shared across the app
+│   ├── configs/              # Application configurations
+│   ├── constants/            # Global constants (e.g., API URL, Keys, etc.)
+│   ├── di/                   # Dependency Injection (get_it setup)
+│   ├── enums/                # Named constant value sets (Enums)
+│   ├── extensions/           # Extension methods to enhance functionality
+│   ├── localization/         # Internationalization (i18n)
+│   ├── models/               # Global model classes
+│   ├── services/             # Shared services (API, local storage, etc.)
+│   ├── themes/               # Theme and color scheme management
+│   ├── utils/                # Utility helpers (validators, formatters, etc.)
+│   └── widgets/              # Reusable shared widgets (buttons, cards, modals, etc.)
+├── features/                 # Main feature-based modules
+│   ├── products/             # Product-related features
+│   │   ├── domain/           # Domain layer (business logic, models)
+│   │   │   ├── models/       # Data models specific to this feature
+│   │   │   └── repositories/ # Repository interfaces and implementations
+│   │   └── presentation/     # Presentation layer (UI and state management)
+│   │       ├── bloc/         # Bloc or Cubit files for state management
+│   │       ├── pages/        # UI screens (e.g., Product List, Detail Page)
+│   │       └── widgets/      # Feature-specific UI components
+│   └── splash/               # Splash screen feature module
+├── app.dart                  # Root app configuration (MaterialApp, routes, etc.)
+├── main.dart                 # Main application entry point
+└── simple_bloc_observer.dart # Bloc observer for logging state transitions
 ```
 
 ---
@@ -140,8 +142,8 @@ flutter pub run build_runner build --delete-conflicting-outputs
 
 ## 📧 Contact
 
-Nếu công ty có bất kỳ câu hỏi nào đó, có thể liên hệ qua email **ducvuglotec@gmail.com**. Cảm ơn! 😊
+If the company has any questions, feel free to contact me via email at **ducvuglotec@gmail.com**. Thank you! 😊
 
 ---
 
-> 💡 Built with love using Flutter and best development practices.
+> 💡 Have a nice day.

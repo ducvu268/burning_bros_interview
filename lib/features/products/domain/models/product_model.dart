@@ -1,20 +1,34 @@
+import 'package:burning_bros_interview/core/constants/hive_type_const.dart';
 import 'package:burning_bros_interview/core/models/base_model.dart';
+import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'product_model.g.dart';
 
+@HiveType(typeId: HiveTypeConst.productType)
 @JsonSerializable()
 class ProductModel extends TModel {
+  @HiveField(0)
   final String title;
+  @HiveField(1)
   final String? description;
+  @HiveField(2)
   final double price;
+  @HiveField(3)
   final double discountPercentage;
+  @HiveField(4)
   final double rating;
+  @HiveField(5)
   final int stock;
+  @HiveField(6)
   final String? brand;
+  @HiveField(7)
   final String? category;
+  @HiveField(8)
   final String? thumbnail;
+  @HiveField(9)
   final List<String>? images;
+  @HiveField(10)
   final bool isFavorite;
 
   ProductModel({
@@ -109,6 +123,19 @@ class ProductModel extends TModel {
 
   @override
   int get hashCode {
-    return Object.hash(id, title, description, price, discountPercentage, rating, stock, brand, category, thumbnail, images, isFavorite);
+    return Object.hash(
+      id,
+      title,
+      description,
+      price,
+      discountPercentage,
+      rating,
+      stock,
+      brand,
+      category,
+      thumbnail,
+      images,
+      isFavorite,
+    );
   }
 }

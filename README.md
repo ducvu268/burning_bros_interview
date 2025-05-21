@@ -1,23 +1,41 @@
-# Interview at Burning Bros
+# 🔍 Infinite Scrolling and Searchable Product List (Flutter) | Interview at Burning Bros
 
-## 📌 Giới thiệu
-Theo yêu cầu bài test từ ITBee Solutions, thì đây là ứng dụng **Quản lý Công Việc (Task Manager App)** được phát triển bằng Flutter, sử dụng BloC để quản lý state. Ứng dụng giúp người dùng tạo danh sách công việc cá nhân, theo dõi trạng thái hoàn thành và lưu trữ dữ liệu bằng SQLite. Ứng dụng chạy trên cả **iOS & Android**.
+A Flutter coding project that demonstrates how to build an infinite scrolling list of products with search functionality, local favorites, and offline awareness.
 
-## 🚀 Tính năng chính
-- 📝 **Quản lý công việc**: Thêm, sửa, xóa công việc.
-- ✅ **Đánh dấu hoàn thành**: Chuyển đổi trạng thái hoàn thành/chưa hoàn thành.
-- 📅 **Hạn hoàn thành**: Đặt ngày hoàn thành cho công việc.
-- 🔍 **Bộ lọc công việc**: Hiển thị công việc chưa hoàn thành hoặc tất cả công việc.
-- 🎨 **Giao diện đơn giản & mượt mà**: Sử dụng `ListView.builder` để hiển thị danh sách.
-- 🔔 **Snackbar thông báo**: Hiển thị khi thêm, sửa, xóa công việc.
-- ⚡ **Dialog xác nhận xóa**: Đảm bảo người dùng không xóa nhầm dữ liệu.
+> 📌 This project uses the [DummyJSON Product API](https://dummyjson.com/docs/products)
+> 🎯 Key features include pagination, debounced search, offline handling, and local storage with Hive.
 
-## 🛠️ Công nghệ sử dụng
-- **Flutter** (Dart)
-- **SQLite**
-- **State Management**: BloC
+---
 
-## 📂 Cấu trúc thư mục
+## 📱 Features
+
+* 🔁 Infinite scrolling (loads 20 products per scroll)
+* 🔍 Real-time product search with debounce
+* ❤️ Add/remove favorites with local persistence
+* 📂 Store favorite products using Hive (local NoSQL DB)
+* 📶 Offline detection and fallback to local favorites
+* ⚙️ Clean architecture using BLoC pattern and dependency injection
+
+---
+
+## 🧰 Tech Stack
+
+| Tool / Library       | Purpose                             |
+| -------------------- | ----------------------------------- |
+| Flutter              | Mobile UI development               |
+| BLoC (flutter\_bloc) | State management                    |
+| Dio                  | HTTP networking                     |
+| Hive                 | Local database for favorite storage |
+| Freezed              | Data modeling and immutability      |
+| Json Serializable    | JSON parsing                        |
+| Injectable + GetIt   | Dependency injection                |
+| Connectivity Plus    | Internet connection status handling |
+| Logger               | Logging debug info and errors       |
+
+---
+
+## 📂 Project Structure
+
 ```
 lib/
 ├── core/                     # Các thành phần cốt lõi, dùng chung
@@ -45,33 +63,85 @@ lib/
 └── simple_bloc_observer.dart # Theo dõi và ghi lại các thay đổi trong trạng thái (state)
 ```
 
-## 🚀 Cài đặt & Chạy ứng dụng
-### 1️⃣ Clone repository
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
+
 ```bash
-git clone https://github.com/ducvu268/interview_junior_flutter.git
-cd interview_junior_flutter
+git clone https://github.com/ducvu268/burning_bros_interview.git
+cd burning_bros_interview
 ```
 
-### 2️⃣ Cài đặt dependencies
+### 2. Install Dependencies
+
 ```bash
-1. flutter pub get
-2. dart run build_runner build --delete-conflicting-outputs
+flutter pub get
 ```
 
-### 3️⃣ Chạy ứng dụng
+### 3. Generate Code
+
+```bash
+flutter pub run build_runner build --delete-conflicting-outputs
+```
+
+### 4. Run the App
+
 ```bash
 flutter run
 ```
 
-## 🚀 Test nhanh với file build APK
-Link: **https://drive.google.com/drive/folders/1SXAgWK4OI8DiF0W3638_pXxd7G5m9CpK?usp=sharing**
+---
 
-## 📈 Mở rộng
-- 🔹 **Tìm kiếm công việc** 🔍
-- 🔹 **Giao diện hỗ trợ Dark Mode** 🌙
-- 🔹 **Sử dụng BloC để quản lý state** ⚡
+## 🔍 How It Works
+
+### 📦 Pagination
+
+* Uses the endpoint `/products?limit=20&skip=x`
+* Loads more products as the user scrolls
+
+### 🔎 Search
+
+* Uses `/products/search?q=keyword`
+* Search is debounced to reduce unnecessary API calls
+
+### ❤️ Favorites
+
+* Users can favorite/unfavorite products
+* Favorites are saved in local Hive DB and persist across app restarts
+
+### 📴 Offline Support
+
+* App detects internet connection
+* If offline, it displays saved favorite products
 
 ---
-### 📩 Liên hệ
+
+## 🎯 Design Decisions
+
+* **Clean Architecture**: Separation of concerns via feature-based folders
+* **Scalable Architecture**: Easy to add more features or services
+* **Efficient Search**: Debounced input to avoid API flooding
+* **Smooth UX**: Non-laggy scrolling, even with large datasets
+* **Offline-first UX**: Displays useful content even when no internet is available
+
+---
+
+
+## 📝 Useful Commands
+
+```bash
+# Generate all necessary code for DI, Freezed, Hive, etc.
+flutter pub run build_runner build --delete-conflicting-outputs
+```
+
+---
+
+## 📧 Contact
+
 Nếu công ty có bất kỳ câu hỏi nào đó, có thể liên hệ qua email **ducvuglotec@gmail.com**. Cảm ơn! 😊
 
+---
+
+> 💡 Built with love using Flutter and best development practices.

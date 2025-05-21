@@ -7,4 +7,8 @@ abstract class ProductRepository {
   });
 
   Future<List<ProductModel>> searchProducts(String query);
+
+  Future<List<ProductModel>> getFavorites();
+
+  Future<void> toggleFavorite(ProductModel product);
 }

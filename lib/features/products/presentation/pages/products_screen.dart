@@ -1,3 +1,4 @@
+import 'package:burning_bros_interview/core/configs/app_router.dart';
 import 'package:burning_bros_interview/core/enums/shimmer_type_enum.dart';
 import 'package:burning_bros_interview/core/extensions/text_style_ext.dart';
 import 'package:burning_bros_interview/core/themes/app_color.dart';
@@ -47,7 +48,16 @@ class _ProductsScreenState extends State<ProductsScreen> {
   void dispose() {
     scrollController.dispose();
     searchController.dispose();
+    debouncer.dispose();
     super.dispose();
+  }
+
+  void _onNavigateToFavorite() {
+    Navigator.pushNamed(
+      context,
+      AppRoutes.favorite,
+      arguments: context.read<ProductBloc>().state.productsFavorite,
+    );
   }
 
   @override
@@ -68,9 +78,46 @@ class _ProductsScreenState extends State<ProductsScreen> {
           ),
           centerTitle: true,
           leadingWidth: 36,
+          widgetRight: Stack(
+            children: [
+              IconButton(
+                onPressed: _onNavigateToFavorite,
+                icon: const Icon(Icons.favorite),
+                color: AppColors.contentColorWhite,
+                iconSize: 32,
+              ),
+              Positioned(
+                right: 0,
+                top: 0,
+                child: Container(
+                  width: 20,
+                  height: 20,
+                  padding: EdgeInsets.zero,
+                  decoration: BoxDecoration(
+                    color: AppColors.contentColorRed,
+                    borderRadius: BorderRadius.circular(500),
+                  ),
+                  child: BlocBuilder<ProductBloc, ProductState>(
+                    builder: (__, state) {
+                      return Center(
+                        child: Text(
+                          state.productsFavorite.length.toString(),
+                          style: context.textStyle10.copyWith(
+                            color: AppColors.contentColorWhite,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
         body: RefreshIndicator.adaptive(
           onRefresh: () async {
+            searchController.clear();
             context.read<ProductBloc>().add(LoadProductsEvent());
           },
           child: Column(
@@ -82,7 +129,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   ctrl: searchController,
                   onChanged: (value) {
                     debouncer.run(() {
-                      context.read<ProductBloc>().add(SearchProducts(value));
+                      context.read<ProductBloc>().add(
+                        SearchProductsEvent(value),
+                      );
                     });
                   },
                   validator: (val) {
@@ -94,7 +143,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   hintText: 'Search by product name',
                   borderWidth: 0.5,
                   borderColor: Colors.grey.shade400,
-                  borderRadius: 24,
+                  borderRadius: 12,
                   keyboardType: TextInputType.text,
                   fillColor: Colors.white,
                   prefixIcon: Image.asset(
@@ -120,21 +169,20 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   }
 
                   if (state.status == ProductStatus.failure) {
-                    return Center(
-                      child: Text(
-                        state.errorMessage,
-                        style: context.textStyle16,
-                        textAlign: TextAlign.center,
+                    return Expanded(
+                      child: Center(
+                        child: Text(
+                          state.errorMessage,
+                          style: context.textStyle16,
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     );
                   }
 
                   if (state.products.isEmpty) {
-                    return Center(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height * 0.2,
-                        ),
+                    return Expanded(
+                      child: Center(
                         child: Text(
                           'List is empty',
                           style: context.textStyle14.copyWith(
@@ -159,12 +207,28 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       separatorBuilder: (c, i) => const SizedBox(height: 16),
                       itemBuilder: (__, index) {
                         if (index < state.products.length) {
-                          return ProductItem(product: state.products[index]);
+                          return ProductItem(
+                            product: state.products[index],
+                            icon:
+                                state.products[index].isFavorite
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                            onToggleFavorite: (product) {
+                              debouncer.run(() {
+                                context.read<ProductBloc>().add(
+                                  ToggleFavoriteEvent(product),
+                                );
+                              });
+                            },
+                          );
                         } else {
-                          return Center(
-                            child: CircularProgressIndicator(
-                              color: AppColors.primary,
-                              strokeWidth: 3,
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 48),
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: AppColors.primary,
+                                strokeWidth: 5,
+                              ),
                             ),
                           );
                         }

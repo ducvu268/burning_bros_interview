@@ -4,11 +4,12 @@ import 'package:bloc/bloc.dart';
 import 'package:burning_bros_interview/app.dart';
 import 'package:burning_bros_interview/core/di/injector.dart';
 import 'package:burning_bros_interview/core/services/local_storage_service.dart';
+import 'package:burning_bros_interview/features/products/domain/models/product_model.dart';
 import 'package:burning_bros_interview/simple_bloc_observer.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 
 void main() {
   runZonedGuarded(() async {
@@ -16,8 +17,9 @@ void main() {
     configureDependencies();
     await LocalStorageService.init();
     await _hideSystemUI();
-    Bloc.observer = SimpleBlocObserver();
+    await initHive();
 
+    Bloc.observer = SimpleBlocObserver();
     runApp(FlutterInterviewApp());
   }, (error, stack) {
     debugPrint('error in main = $error');
@@ -37,4 +39,11 @@ Future<void> _hideSystemUI() async {
       SystemChrome.restoreSystemUIOverlays();
     }
   });
+}
+
+Future<void> initHive() async {
+  final appDocumentsDir = await getApplicationDocumentsDirectory();
+  Hive
+    ..init(appDocumentsDir.path)
+    ..registerAdapter(ProductModelAdapter());
 }

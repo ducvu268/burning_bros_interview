@@ -5,8 +5,15 @@ import 'package:flutter/material.dart';
 
 class ProductItem extends StatelessWidget {
   final ProductModel product;
+  final IconData icon;
+  final Function(ProductModel) onToggleFavorite;
 
-  const ProductItem({super.key, required this.product});
+  const ProductItem({
+    super.key,
+    required this.product,
+    required this.icon,
+    required this.onToggleFavorite,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +33,7 @@ class ProductItem extends StatelessWidget {
         ],
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CachedNetworkImage(
             imageUrl: product.thumbnail ?? '',
@@ -51,38 +58,64 @@ class ProductItem extends StatelessWidget {
                     fontFamily: 'Inter',
                     overflow: TextOverflow.ellipsis,
                   ),
-                  maxLines: 1,
+                  maxLines: 2,
+                ),
+                const SizedBox(height: 6),
+
+                /// PRICE
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Icon(
+                      Icons.price_change,
+                      color: Colors.black,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      '${product.price.toString()}\$',
+                      style: const TextStyle(
+                        color: AppColors.contentColorGreen2,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13,
+                        fontFamily: 'Inter',
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      maxLines: 1,
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 6),
 
                 /// RATING
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(
-                      Icons.star,
-                      color: Colors.yellow,
-                      size: 14,
-                    ),
+                    const Icon(Icons.star, color: Colors.orange, size: 16),
                     const SizedBox(width: 6),
-                    Text(
-                      product.rating.toString(),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 10,
-                        fontFamily: 'Inter',
+                    Expanded(
+                      child: Text(
+                        product.rating.toString(),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 10,
+                          fontFamily: 'Inter',
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        maxLines: 2,
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 6),
-    
+
                 /// DESCRIPTION
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Icon(
-                      Icons.location_on,
+                      Icons.description_outlined,
                       color: Colors.black,
                       size: 16,
                     ),
@@ -97,7 +130,7 @@ class ProductItem extends StatelessWidget {
                           fontFamily: 'Inter',
                           overflow: TextOverflow.ellipsis,
                         ),
-                        maxLines: 1,
+                        maxLines: 2,
                       ),
                     ),
                   ],
@@ -105,34 +138,10 @@ class ProductItem extends StatelessWidget {
                 const SizedBox(height: 6),
 
                 /// ADD TO WISHLIST
-                const SizedBox(height: 6),
-                Row(
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        print('id = ${product.id}');
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 12,
-                          horizontal: 12,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(40),
-                        ),
-                      ),
-                      child: const Text(
-                        'Add to wishlist',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontFamily: 'Inter',
-                        ),
-                      ),
-                    ),
-                  ],
+                IconButton(
+                  onPressed: () => onToggleFavorite(product),
+                  icon: Icon(icon, color: AppColors.contentColorRed),
+                  iconSize: 24,
                 ),
               ],
             ),

@@ -9,10 +9,10 @@ class LoadProductsEvent extends ProductEvent {}
 
 class LoadMoreProductsEvent extends ProductEvent {}
 
-class SearchProducts extends ProductEvent {
+class SearchProductsEvent extends ProductEvent {
   final String query;
 
-  SearchProducts(this.query);
+  SearchProductsEvent(this.query);
 
   @override
   List<Object?> get props => [query];
@@ -26,5 +26,3 @@ class ToggleFavoriteEvent extends ProductEvent {
   @override
   List<Object?> get props => [product];
 }
-
-class RefreshProductsEvent extends ProductEvent {}

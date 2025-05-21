@@ -13,7 +13,7 @@ class AppColors {
   static const Color contentColorYellow = Color(0xFFFFC300);
   static const Color contentColorOrange = Color(0xFFFF683B);
   static const Color contentColorGreen = Color(0xFF3BFF49);
-  static const Color colorPriceSendMoney = Color.fromARGB(255, 12, 151, 74);
+  static const Color contentColorGreen2 = Color.fromARGB(255, 12, 151, 74);
   static const Color contentColorPurple = Color(0xFF6E1BFF);
   static const Color contentColorPink = Color(0xFFFF3AF2);
   static const Color contentColorRed = Color(0xFFE80054);

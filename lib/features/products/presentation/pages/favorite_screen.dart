@@ -66,25 +66,11 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
           builder: (__, state) {
             if (state.status == ProductStatus.loading ||
                 state.status == ProductStatus.initial) {
-              return Expanded(
-                child: ShimmerAnimationGlobal(
-                  isLoading: true,
-                  type: ShimmerType.product,
-                  itemCount: 20,
-                  radius: 12,
-                ),
-              );
-            }
-
-            if (state.status == ProductStatus.failure) {
-              return Expanded(
-                child: Center(
-                  child: Text(
-                    state.errorMessage,
-                    style: context.textStyle16,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
+              return ShimmerAnimationGlobal(
+                isLoading: true,
+                type: ShimmerType.product,
+                itemCount: 20,
+                radius: 12,
               );
             }
 
@@ -113,6 +99,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                       separatorBuilder: (c, i) => const SizedBox(height: 16),
                       itemBuilder: (__, index) {
                         return ProductItem(
+                          isShowIcon: false,
                           product: state.productsFavorite[index],
                           icon: Icons.favorite,
                           onToggleFavorite: (product) {

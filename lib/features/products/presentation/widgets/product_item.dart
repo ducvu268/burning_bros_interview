@@ -6,12 +6,14 @@ import 'package:flutter/material.dart';
 class ProductItem extends StatelessWidget {
   final ProductModel product;
   final IconData icon;
+  final bool isShowIcon;
   final Function(ProductModel) onToggleFavorite;
 
   const ProductItem({
     super.key,
     required this.product,
     required this.icon,
+    this.isShowIcon = true,
     required this.onToggleFavorite,
   });
 
@@ -138,11 +140,13 @@ class ProductItem extends StatelessWidget {
                 const SizedBox(height: 6),
 
                 /// ADD TO WISHLIST
-                IconButton(
-                  onPressed: () => onToggleFavorite(product),
-                  icon: Icon(icon, color: AppColors.contentColorRed),
-                  iconSize: 24,
-                ),
+                !isShowIcon
+                    ? const SizedBox.shrink()
+                    : IconButton(
+                      onPressed: () => onToggleFavorite(product),
+                      icon: Icon(icon, color: AppColors.contentColorRed),
+                      iconSize: 24,
+                    ),
               ],
             ),
           ),

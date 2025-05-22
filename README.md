@@ -26,7 +26,6 @@ A Flutter coding project that demonstrates how to build an infinite scrolling li
 | BLoC (flutter\_bloc) | State management                    |
 | Dio                  | HTTP networking                     |
 | Hive                 | Local database for favorite storage |
-| Freezed              | Data modeling and immutability      |
 | Json Serializable    | JSON parsing                        |
 | Injectable + GetIt   | Dependency injection                |
 | Connectivity Plus    | Internet connection status handling |

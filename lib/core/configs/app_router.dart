@@ -1,5 +1,4 @@
 import 'package:burning_bros_interview/core/di/injector.dart';
-import 'package:burning_bros_interview/features/products/domain/models/product_model.dart';
 import 'package:burning_bros_interview/features/products/presentation/bloc/product_bloc.dart';
 import 'package:burning_bros_interview/features/products/presentation/pages/favorite_screen.dart';
 import 'package:burning_bros_interview/features/products/presentation/pages/products_screen.dart';

@@ -208,6 +208,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       itemBuilder: (__, index) {
                         if (index < state.products.length) {
                           return ProductItem(
+                            isShowIcon: true,
                             product: state.products[index],
                             icon:
                                 state.products[index].isFavorite
